@@ -1,8 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { jwtDecode, JwtPayload } from "jwt-decode"; // Make sure to have the correct import for typescript
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import api from "../api/api";
 import { REFRESH_TOKEN, ACCESS_TOKEN, AUTH_USERNAME } from "../api/constants";
+import LoadingIndicator from "./LoadingIndicator";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -58,7 +59,11 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   };
 
   if (isAuthorized === null) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingIndicator />
+      </div>
+    );
   }
 
   return isAuthorized ? children : <Navigate to="/login" />;
