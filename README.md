@@ -2,19 +2,21 @@
 
 Use Annotate Everything to power your dataset annotation workflows with AI.
 
+
 # Features
 
-## 1. Promptable Instance Segmentation
+**1. Promptable Instance Segmentation**
 
-Simply write a prompt to get Instance Segmentation over a variety of classes.
+- Simply write a prompt to get Instance Segmentation over a variety of classes.
 
-## 2. Fast Inference
+**2. Fast Inference**
 
-Inference runs on a Serverless Function for blazing fast inference.
+- Inference runs on a Serverless Function for blazing fast inference.
 
-### 3. Export to any format
+**3. Export to any format**
 
-Annotations can be exported format of your choice.
+- Annotations can be exported format of your choice.
+
 
 ## Tech Stack
 
@@ -40,7 +42,12 @@ python3.10 -m venv env
 Activate Virtual Environment
 
 ```bash
-. env/bin/activate
+source env/bin/activate
+```
+Install Dependencies
+
+```bash
+pip install -r backend/requirements.txt
 ```
 
 Add Environment variables in `backend/.env`
@@ -53,12 +60,6 @@ Add Environment variables in `frontend/.env`
 
 ```
 VITE_API_URL="<BACKEND_URL>:<PORT>"
-```
-
-Install Dependencies
-
-```bash
-pip install -r backend/requirements.txt
 ```
 
 ### Run Backend
@@ -84,6 +85,8 @@ Install dependencies
 ```bash
 npm install
 ```
+
+Start React App
 
 ```bash
 npm run dev
