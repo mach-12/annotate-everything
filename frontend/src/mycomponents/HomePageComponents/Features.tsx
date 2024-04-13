@@ -27,8 +27,7 @@ const features: FeatureProps[] = [
   },
   {
     title: "Export to any format",
-    description:
-      "Annotations can be exported format of your choice.",
+    description: "Annotations can be exported format of your choice.",
     image: "./test.jpg",
   },
 ];
