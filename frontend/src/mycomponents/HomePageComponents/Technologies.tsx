@@ -40,7 +40,7 @@ export default function Technologies() {
   return (
     <section id="Technologies" className="container pt-24 sm:py-32">
       <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
-        Built with 
+        Built with
       </h2>
 
       <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">

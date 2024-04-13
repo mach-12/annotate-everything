@@ -46,7 +46,10 @@ function Task({ task, onDelete }: TaskProps) {
           </div>
 
           <div className="flex gap-4">
-            <Button className="h-12" onClick={() => navigate(`/tasks/${task.id}`)}>
+            <Button
+              className="h-12"
+              onClick={() => navigate(`/tasks/${task.id}`)}
+            >
               Open
             </Button>
             <Button
