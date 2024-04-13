@@ -52,11 +52,7 @@ export function UserNav({ user }: UserNavProps) {
           </a>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <a
-          onClick={() => {
-            navigate("/logout");
-          }}
-        >
+        <a href="/logout">
           <DropdownMenuItem className="hover:cursor-pointer">
             Log out
           </DropdownMenuItem>
