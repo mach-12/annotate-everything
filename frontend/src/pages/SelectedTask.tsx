@@ -14,7 +14,7 @@ export default function SelectedTask() {
   // Get all tasks
   useEffect(() => {
     getTask();
-  }, []);
+  });
 
   // Get correct task
   const getTask = () => {
