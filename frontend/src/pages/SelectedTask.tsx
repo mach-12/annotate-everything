@@ -1,6 +1,8 @@
 import api from "@/api/api";
 import { Button } from "@/components/ui/button";
+
 import { TaskResponse } from "@/types/types";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -37,7 +39,11 @@ export default function SelectedTask() {
         <h1 className=" scroll-m-20 pb-2 text-2xl font-semibold tracking-tight transition-colors first:mt-0">
           Content
         </h1>
-        <div className="space-y-1">{task?.content}</div>
+        <div className="space-y-1">{task?.description}</div>
+
+        <Avatar>
+          <AvatarImage alt="" src={task?.image} height="300" width="300" />
+        </Avatar>
 
         <Button onClick={() => navigate("/tasks")}>Back</Button>
       </div>

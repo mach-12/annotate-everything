@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,6 +9,7 @@ import TaskForm from "./mycomponents/TasksComponents/TaskForm";
 import SelectedTask from "./pages/SelectedTask";
 import { Navbar } from "./mycomponents/HomePageComponents/NavbarComponents/Navbar";
 import { useUsernameStore } from "./store/userStore";
+import { Footer } from "./mycomponents/Footer";
 
 function Logout() {
   const setUsername = useUsernameStore((state) => state.setUsername);
@@ -59,6 +59,7 @@ function App() {
         <Route path="/register" element={<RegisterAndLogout />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

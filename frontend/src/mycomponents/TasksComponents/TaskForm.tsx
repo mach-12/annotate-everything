@@ -4,21 +4,28 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
+import FileUploadComponent from "./FileUploadComponent";
 
 function TaskForm() {
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+
   const navigate = useNavigate();
 
   // Request to create Task
   const createTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log(image);
+
     api
-      .post("/api/tasks/", { content, title })
+      .post("/api/tasks/", { description, title, prompt, image })
       .then((res) => {
         if (res.status === 201) {
           alert("Task created!");
-          setContent("");
+          setDescription("");
           setTitle("");
         } else {
           alert("Failed to make Task.");
@@ -39,8 +46,13 @@ function TaskForm() {
               Upload image and give a prompt to Annotate
             </p>
           </div>
-          <form className="grid gap-4" onSubmit={createTask}>
+          <form
+            className="grid gap-4"
+            onSubmit={createTask}
+            encType="multipart/form-data"
+          >
             <div className="grid gap-2">
+              {/* Title */}
               <Label htmlFor="title">Title</Label>
               <Input
                 type="text"
@@ -51,22 +63,44 @@ function TaskForm() {
                 value={title}
               />
             </div>
+
+            {/* Image */}
+            <FileUploadComponent image={image} setImage={setImage} />
+
+            {/* Prompt */}
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Content</Label>
+                <Label htmlFor="">Prompt</Label>
               </div>
               <Input
-                id="content"
-                name="content"
+                id="prompt"
+                name="prompt"
                 required
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
               />
             </div>
 
-            <Button type="submit" value="Submit">
-              Annotate
-            </Button>
+            {/* Description */}
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="description">Description</Label>
+              </div>
+              <Input
+                id="description"
+                name="description"
+                required
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            {/* Show button only if there is a File Upload */}
+            {image && (
+              <Button type="submit" value="Submit">
+                Annotate
+              </Button>
+            )}
             <Button variant="destructive" onClick={() => navigate("/tasks")}>
               Cancel
             </Button>

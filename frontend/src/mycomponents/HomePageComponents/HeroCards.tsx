@@ -49,7 +49,7 @@ export const HeroCards = () => {
         </CardHeader>
 
         <CardContent className="text-center pb-2">
-          <p>A deployed protoype speaks larger than words</p>
+          <p>Code protoype speaks larger than words</p>
         </CardContent>
 
         <CardFooter>

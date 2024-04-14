@@ -35,14 +35,14 @@ function Task({ task, onDelete }: TaskProps) {
         alt="Cover image"
         className="aspect-square rounded-lg object-cover"
         height="100"
-        src="/test.jpg"
+        src={task.image}
         width="100"
       />
       <div className="flex-1">
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
             <CardTitle>{task.title}</CardTitle>
-            <CardDescription>{task.content}</CardDescription>
+            <CardDescription>{task.description}</CardDescription>
           </div>
 
           <div className="flex gap-4">
