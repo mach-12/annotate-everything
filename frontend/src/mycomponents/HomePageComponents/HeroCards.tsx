@@ -19,7 +19,7 @@ export const HeroCards = () => {
           <Avatar>
             <AvatarImage
               alt=""
-              src="https://media.licdn.com/dms/image/D4D03AQHA-Y8aftcBEA/profile-displayphoto-shrink_200_200/0/1701346292849?e=1718236800&v=beta&t=djYFFJne5wwaAzmMC2DlJOHm-UZ1x1WJEVeCNjXuD4o"
+              src="./annotate-everything-logo.png"
               height="60"
               width="60"
             />
@@ -27,7 +27,7 @@ export const HeroCards = () => {
           </Avatar>
 
           <div className="flex flex-col">
-            <CardTitle className="text-lg">Mann Acharya</CardTitle>
+            <CardTitle className="text-lg">Annotate Everything</CardTitle>
             <CardDescription>@mach-12</CardDescription>
           </div>
         </CardHeader>

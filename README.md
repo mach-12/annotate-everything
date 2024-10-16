@@ -2,7 +2,6 @@
 
 Use Annotate Everything to power your dataset annotation workflows with AI.
 
-
 # Features
 
 **1. Promptable Instance Segmentation**
@@ -21,7 +20,7 @@ Use Annotate Everything to power your dataset annotation workflows with AI.
 ## Tech Stack
 
 - Azure (Cloud Deployment)
-- Django Rest Framework
+- Django Rest Framework ()
 - Nuclio (Serverless calls)
 - React (frontend client)
 - Vite (Package Manager)
@@ -29,65 +28,94 @@ Use Annotate Everything to power your dataset annotation workflows with AI.
 - Zustand (state management)
 - Docker
 
-## Installation
+## Self hosting guide
 
-### Setup
-
-Create Virtual Environment and install dependencies
+Set appropriate values on `/backend/.env` and `/frontend/.env` files then:
 
 ```bash
-python3.10 -m venv env
+docker compose up --build
 ```
 
-Activate Virtual Environment
+## Development Guide
 
-```bash
-source env/bin/activate
-```
-Install Dependencies
+1. Create Virtual Environment and install dependencies
 
-```bash
-pip install -r backend/requirements.txt
-```
+    ```bash
+    python3.10 -m venv env
+    ```
 
-Add Environment variables in `backend/.env`
+2. Activate Virtual Environment
 
-```
-DJANGO_SECRET_KEY="django-insecure-secure-hash"
-```
+    ```bash
+    source env/bin/activate
+    ```
 
-Add Environment variables in `frontend/.env`
+3. Install Dependencies
 
-```
-VITE_API_URL="<BACKEND_URL>:<PORT>"
-```
+    ```bash
+    pip install -r backend/requirements.txt
+    ```
+
+4. Add Environment variables in `backend/.env`
+
+    ```bash
+    DJANGO_SECRET_KEY="your-secret-key"
+
+    POSTGRES_DB=db_dev
+    POSTGRES_USER=root
+    POSTGRES_PASSWORD=root
+
+    DJANGO_SUPERUSER_USERNAME=admin
+    DJANGO_SUPERUSER_PASSWORD=admin
+    DJANGO_SUPERUSER_EMAIL=admin@admin.com
+
+    DJANGO_DEBUG=True
+    DEVELOPMENT_MODE=True
+    ```
+
+5. Add Environment variables in `frontend/.env`
+
+    ```bash
+    VITE_API_URL="<BACKEND_URL>:<PORT>"
+    ```
+
+## Run Database
+
+1. Start PostgreSQL database
+
+    ```bash
+    docker run --name db_dev -e POSTGRES_PASSWORD=root -e POSTGRES_USER=root -e POSTGRES_DB=db_dev -d -p 5432:5432 postgres
+    ```
 
 ### Run Backend
 
-Make Migrations
+1. Make Migrations
 
-```bash
-cd backend
-python manage.py makemigrations
-python manage.py migrate
-```
+    ```
+    cd backend
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
 
-Start Django Server
+2. Start Django Server
 
-```bash
-python manage.py startapp
-```
+    ```
+    python manage.py runserver
+    ```
 
 ### Run Frontend
 
-Install dependencies
+1. Install dependencies
 
-```bash
-npm install
-```
+    ```
+    npm install
+    ```
 
-Start React App
+2. Start React App
 
-```bash
-npm run dev
-```
+    ```
+    npm run dev
+    ```
+
+- Application should be running on localhost:5173 by default
+- Backend server should be running on localhost:8000 by default

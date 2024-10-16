@@ -2,8 +2,10 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { HeroCards } from "./HeroCards";
 
+
 export function Hero() {
   const navigate = useNavigate();
+
   return (
     <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
       <div className="text-center lg:text-start space-y-6">
@@ -22,7 +24,6 @@ export function Hero() {
             Annotations
           </h2>
         </main>
-
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
           Use Annotate Everything to power your dataset annotation workflows
           with AI

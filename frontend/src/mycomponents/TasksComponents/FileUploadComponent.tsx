@@ -2,6 +2,7 @@ import React, { ChangeEvent, Dispatch, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CircleX } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface FileUploadProps {
   image: File | null;
@@ -13,6 +14,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({
 }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [imageURL, setImageURL] = useState("");
 
   const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (image) {
@@ -23,7 +25,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({
       const selectedFile = event.target.files[0];
       if (validateFile(selectedFile)) {
         setImage(selectedFile);
-        console.log(selectedFile);
+        setImageURL(URL.createObjectURL(selectedFile));
       }
     }
   };
@@ -112,33 +114,41 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({
           onChange={handleFileInputChange}
           className="hidden"
         />
-        <Button
-          className="mb-2"
-          onClick={() => document.getElementById("fileInput")?.click()}
-        >
-          Add File
-        </Button>
-        <span className="text-sm text-gray-500">or</span>
-        <span className="text-sm text-gray-500">drag your file here</span>
+
+        {image ? (
+          <div className="flex items-center justify-between gap-5">
+            <div className="flex items-center">
+              <Avatar>
+                <AvatarImage src={imageURL} />
+              </Avatar>
+            </div>
+            <button
+              onClick={handleRemoveFile}
+              className="p-1 bg-muted rounded-lg"
+            >
+              <CircleX />
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center">
+            <Button
+              className="mb-2"
+              onClick={() => document.getElementById("fileInput")?.click()}
+            >
+              Add File
+            </Button>
+            <span className="text-sm text-gray-500">or</span>
+            <span className="text-sm text-gray-500">drag your file here</span>
+          </div>
+        )}
       </div>
 
       <p className="text-sm mt-1 text-gray-500">
         Supported file formats include JPGs, JPEGs, PNGs.
       </p>
+
       {errorMessage && (
         <p className="text-sm mt-1 text-red-500">{errorMessage}</p>
-      )}
-
-      {image && (
-        <div>
-          <button
-            onClick={handleRemoveFile}
-            className="p-2 bg-muted rounded-lg"
-          >
-            {" "}
-            <CircleX />{" "}
-          </button>
-        </div>
       )}
     </div>
   );

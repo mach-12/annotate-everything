@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+  backend:
+    container_name: ae-backend
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - 8000:8000
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+
+  db:
+    container_name: ae-postgres
+    image: postgres:15-alpine
+    ports:
+      - 5432:5432
+    env_file:
+      - ./backend/.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  frontend:
+    container_name: ae-frontend
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    volumes:
+      - frontend:/frontend/dist
+    env_file:
+      - ./frontend/.env
+
+  nginx:
+    container_name: ae-nginx
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - static:/backend/static
+      - media:/backend/media/images
+      - frontend:/backend/var/www/frontend
+    depends_on:
+      - backend
+      - frontend
+
+  nuclio:
+    container_name: nuclio
+    image: quay.io/nuclio/dashboard:1.13.0-amd64
+    restart: always
+    networks:
+      - nuclio-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      http_proxy:
+      https_proxy:
+      no_proxy: ${no_proxy:-}
+      NUCLIO_CHECK_FUNCTION_CONTAINERS_HEALTHINESS: 'true'
+      NUCLIO_DASHBOARD_DEFAULT_FUNCTION_MOUNT_MODE: 'volume'
+    ports:
+      - '8070:8070'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 100m
+        max-file: "3"
+
+networks:
+  nuclio-network:
+    driver: bridge
+
+volumes:
+  db-data:
+  static:
+  media:
+  frontend:

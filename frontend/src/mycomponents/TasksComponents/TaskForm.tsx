@@ -18,8 +18,6 @@ function TaskForm() {
   const createTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(image);
-
     api
       .post("/api/tasks/", { description, title, prompt, image })
       .then((res) => {
@@ -70,7 +68,7 @@ function TaskForm() {
             {/* Prompt */}
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="">Prompt</Label>
+                <Label htmlFor="prompt">Prompt</Label>
               </div>
               <Input
                 id="prompt"
@@ -96,11 +94,14 @@ function TaskForm() {
             </div>
 
             {/* Show button only if there is a File Upload */}
-            {image && (
-              <Button type="submit" value="Submit">
-                Annotate
-              </Button>
-            )}
+            <Button
+              type="submit"
+              value="Submit"
+              disabled={image === null ? true : false}
+            >
+              Annotate
+            </Button>
+
             <Button variant="destructive" onClick={() => navigate("/tasks")}>
               Cancel
             </Button>

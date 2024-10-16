@@ -56,6 +56,8 @@ function App() {
         ></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/logout" element={<Logout />}></Route>
+        <Route path="/blog" element={<TaskForm />}></Route>
+
         <Route path="/register" element={<RegisterAndLogout />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
