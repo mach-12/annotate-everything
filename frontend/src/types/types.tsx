@@ -5,5 +5,7 @@ export interface TaskResponse {
   description: string;
   prompt: string;
   image: string;
+  annotated_image: string;
+  annotated_data: string;
   created_at: string;
 }

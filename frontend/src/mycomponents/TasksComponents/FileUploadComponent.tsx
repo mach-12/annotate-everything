@@ -7,10 +7,12 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 interface FileUploadProps {
   image: File | null;
   setImage: Dispatch<React.SetStateAction<File | null>>;
+  setAnnotatedImage: Dispatch<React.SetStateAction<File | null>>;
 }
 const FileUploadComponent: React.FC<FileUploadProps> = ({
   image,
   setImage,
+  setAnnotatedImage,
 }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -25,6 +27,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({
       const selectedFile = event.target.files[0];
       if (validateFile(selectedFile)) {
         setImage(selectedFile);
+        setAnnotatedImage(selectedFile);
         setImageURL(URL.createObjectURL(selectedFile));
       }
     }

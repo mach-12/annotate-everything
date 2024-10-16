@@ -11,6 +11,8 @@ function TaskForm() {
   const [title, setTitle] = useState("");
   const [prompt, setPrompt] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [annotatedImage, setAnnotatedImage] = useState<File | null>(null);
+  const [annotatedData, setAnnotatedData] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,13 +20,35 @@ function TaskForm() {
   const createTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Use FormData to send images and text data
+    const formData = new FormData();
+    formData.append("description", description);
+    formData.append("title", title);
+    formData.append("prompt", prompt);
+
+    // Only append the image if it exists
+    if (image) {
+      formData.append("image", image);
+    }
+
+    // Only append the annotated image if it exists
+    if (annotatedImage) {
+      formData.append("annotated_image", annotatedImage);
+    }
+
+    formData.append("annotated_data", annotatedData);
+
     api
-      .post("/api/tasks/", { description, title, prompt, image })
+      .post("/api/tasks/", formData)
       .then((res) => {
         if (res.status === 201) {
           alert("Task created!");
           setDescription("");
           setTitle("");
+          setPrompt("");
+          setAnnotatedData("");
+          setImage(null);
+          setAnnotatedImage(null);
         } else {
           alert("Failed to make Task.");
         }
@@ -63,7 +87,11 @@ function TaskForm() {
             </div>
 
             {/* Image */}
-            <FileUploadComponent image={image} setImage={setImage} />
+            <FileUploadComponent
+              image={image}
+              setImage={setImage}
+              setAnnotatedImage={setAnnotatedImage}
+            />
 
             {/* Prompt */}
             <div className="grid gap-2">
@@ -93,7 +121,21 @@ function TaskForm() {
               />
             </div>
 
-            {/* Show button only if there is a File Upload */}
+            {/* Annotated Data */}
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="annotatedData">Annotated Data</Label>
+              </div>
+              <Input
+                id="annotatedData"
+                name="annotated_data"
+                required
+                value={annotatedData}
+                onChange={(e) => setAnnotatedData(e.target.value)}
+              />
+            </div>
+
+            {/* Submit button */}
             <Button
               type="submit"
               value="Submit"
